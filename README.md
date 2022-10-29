@@ -9,13 +9,8 @@
 
 # Projects
 
-- [Week1](#Week-1) 
-- [Week2](#Week-2) 
+- [Week1](GroupProjects/Week1.md) 
 
-## Week 1
-
-
-## Week 2
 
 # Setup
 - Install the dependencies via npm
