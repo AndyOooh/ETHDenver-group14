@@ -7,6 +7,8 @@
   </a>
 </p>
 
+# Projects
+
 - [Week1](#Week-1) 
 - [Week2](#Week-2) 
 
@@ -14,3 +16,17 @@
 
 
 ## Week 2
+
+# Setup
+- Install the dependencies via npm
+- Use node version 16 or 18
+
+# Testing
+
+`npm run test`
+
+# Deploying with Hardhat
+
+1. Add the env variables as specified in the example file
+2. `npm run deploy` to deploy to goerli
+
