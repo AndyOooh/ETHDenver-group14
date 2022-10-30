@@ -25,3 +25,8 @@
 1. Add the env variables as specified in the example file
 2. `npm run deploy` to deploy to goerli
 
+# Transactions
+
+## helloWorld:setText
+1. change the args passed to `setText` in `scripts/transactions/setText.ts`
+2. `npm run helloWorld:setText`
