@@ -9,3 +9,5 @@
 - @luvahbunny set the owner to @antwuandixon address. tx hash: `0xc01ee8b1ef872bb17f9aa5cedeff8e6ac425b6ae7c6507c6e67c00aba25c6875`
 
 - @antwuandixon set the text to "orange". tx hash: `0x7b6696bab70ec704fe50d4e340ca756b033c45e1f2cba6fcbc228d0ae50261bd`
+
+- @antwuandixon transferred ownership to Serena Lui. tx hash: `0xd452064958c04713030c6d278db3d36cf8ba19f3fca2750b5f7b115f11c1ac28`
