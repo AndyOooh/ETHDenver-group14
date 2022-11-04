@@ -4,11 +4,13 @@
   "description": "<h1 align=\"center\">ETHDenver boot camp Nov 24 2022 cohort</h1> <h4 align=\"center\">Group 14</h4> <p>   <img alt=\"Version\" src=\"https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000\" />   <a href=\"#\" target=\"_blank\">     <img alt=\"License: ISC\" src=\"https://img.shields.io/badge/License-ISC-yellow.svg\" />   </a> </p>",
   "main": "scripts/deploy.ts",
   "scripts": {
-    "test": "npx hardhat test test/HelloWorld.ts",
+    "test": "npx hardhat test",
     "deploy": "npx hardhat run --network goerli scripts/deploy.ts",
     "compile": "npx hardhat compile",
     "helloWorld:setText": "ts-node scripts/transactions/setText.ts",
-    "lint": "npx run solhint contracts/**/*.sol"
+    "lint:sol": "npx run solhint contracts/**/*.sol",
+    "lint:ts": "eslint --max-warnings 7 --ext js,ts,json scripts test",
+    "lint:ts:fix": "eslint --fix --ext js,ts,json,test.ts scripts test"
   },
   "repository": {
     "type": "git",
@@ -26,8 +28,13 @@
   "homepage": "https://github.com/AndyOooh/ETHDenver-group14#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "5.42.0",
+    "@typescript-eslint/parser": "5.42.0",
     "dotenv": "^16.0.3",
-    "ethers": "^5.7.2",
+    "eslint": "8.26.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-n": "15.4.0",
+    "eslint-plugin-node": "11.1.0",
     "hardhat": "^2.12.1",
     "solhint": "^3.3.7",
     "ts-node": "^10.9.1",
