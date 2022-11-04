@@ -5,7 +5,7 @@
   "main": "scripts/deploy.ts",
   "scripts": {
     "test": "npx hardhat test test/HelloWorld.ts",
-    "deploy": "npx hardhat run --network goerli scripts/deploy.ts",
+    "deploy": "yarn run ts-node --files scripts/deploy.ts",
     "compile": "npx hardhat compile",
     "helloWorld:setText": "ts-node scripts/transactions/setText.ts"
   },
