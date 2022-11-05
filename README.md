@@ -20,6 +20,11 @@
 
 `npm run test`
 
+# Linting
+- Lint TS/JS files: `npm run lint:ts`
+- Lint fix TS/JS files: `npm run lint:ts:fix`
+- Lint fix Solidity files: `npm run lint:sol`
+
 # Deploying with Hardhat
 
 1. Add the env variables as specified in the example file

@@ -1,7 +1,7 @@
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { expect } from 'chai';
-import { ethers } from 'hardhat';
-import { Ballot, Ballot__factory } from '../typechain-types';
+import {SignerWithAddress} from '@nomiclabs/hardhat-ethers/signers';
+import {expect} from 'chai';
+import {ethers} from 'hardhat';
+import {Ballot} from '../typechain-types';
 
 const PROPOSALS = ['lemon', 'apple', 'banana'];
 

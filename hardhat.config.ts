@@ -1,4 +1,4 @@
-import { HardhatUserConfig } from 'hardhat/config';
+import {HardhatUserConfig} from 'hardhat/config';
 import '@nomicfoundation/hardhat-toolbox';
 import 'dotenv/config';
 
@@ -12,7 +12,6 @@ const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY;
 // Beware: NEVER put real Ether into testing accounts
 const networkArg = process.argv[3];
 const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY as string;
-const FUJI_PRIVATE_KEY = process.env.FUJI_PRIVATE_KEY as string;
 
 // Make sure GOERLI_PRIVATE_KEY is set in .env if goerli is chosen as network.
 if (networkArg === 'goerli' && !GOERLI_PRIVATE_KEY) {

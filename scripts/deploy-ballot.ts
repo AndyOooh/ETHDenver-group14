@@ -1,10 +1,10 @@
-import { ethers } from 'hardhat';
-import { Ballot, Ballot__factory } from '../typechain-types';
+import {ethers} from 'hardhat';
+import {Ballot__factory} from '../typechain-types';
 import 'dotenv/config';
 
 // deploy function
-export const deployBallot = async () => {
-  const { ALCHEMY_API_KEY } = process.env;
+export const deployBallot = async (): Promise<void> => {
+  const {ALCHEMY_API_KEY} = process.env;
   const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY as string; // getting linter issues if not assigning type.
   const [networkArg, ...constructorArgs] = process.argv.slice(3);
   if (!ALCHEMY_API_KEY) {
@@ -16,7 +16,6 @@ export const deployBallot = async () => {
   const PROPOSALS_BYTES32 = constructorArgs.map(p => ethers.utils.formatBytes32String(p));
   try {
     let ContractFactory: Ballot__factory;
-    let contract: Ballot;
     if (networkArg === 'goerli') {
       // deploy to goerli
       const provider = new ethers.providers.AlchemyProvider('goerli', ALCHEMY_API_KEY);
@@ -29,7 +28,7 @@ export const deployBallot = async () => {
       const accounts = await ethers.getSigners();
       ContractFactory = new Ballot__factory(accounts[0]);
     }
-    contract = await ContractFactory.deploy(PROPOSALS_BYTES32);
+    const contract = await ContractFactory.deploy(PROPOSALS_BYTES32);
     await contract.deployed();
     // This is only for logging the proposals to the console.
     const proposals = [];
@@ -37,12 +36,13 @@ export const deployBallot = async () => {
       const proposal = await contract.proposals(index);
       proposals.push(proposal);
     }
+    // eslint-disable-next-line no-console
     console.log(`Contract Ballot deployed to: ${contract.address} on chainId: ${
       contract.deployTransaction.chainId
     }
     with proposals: ${proposals.map(p => ethers.utils.parseBytes32String(p.name))}`);
   } catch (error) {
-    console.error(error);
+    throw new Error(error as string)
     process.exitCode = 1;
   }
 };
