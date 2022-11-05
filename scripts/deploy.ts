@@ -1,17 +1,20 @@
-import {ethers} from 'hardhat';
 
-async function main(): Promise<void> {
-	const HelloWorld = await ethers.getContractFactory("HelloWorld");
-	const helloWorld = await HelloWorld.deploy();
-  
-	await helloWorld.deployed();
-  
-	// eslint-disable-next-line no-console
-	console.log(`🚀 ~ Hello World contract deployed to ${helloWorld.address}`);
-}
+import { deployBallot } from './deploy-ballot';
+import { deployHelloWorld } from './deploy-helloWorld';
 
-main().catch(error => {
-	// eslint-disable-next-line no-console
-	console.error(error);
-	process.exitCode = 1;
-});
+export const deploy = () => {
+  const contractArg = process.argv[2];
+  switch (contractArg) {
+    case 'HelloWorld':
+      deployHelloWorld();
+      break;
+    case 'Ballot':
+      deployBallot();
+      break;
+    default:
+      console.log('You need to pass a valid contract name as the first argument');
+      throw new Error('Invalid contract name');
+  }
+};
+
+deploy();

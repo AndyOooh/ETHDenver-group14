@@ -4,10 +4,10 @@
   "description": "<h1 align=\"center\">ETHDenver boot camp Nov 24 2022 cohort</h1> <h4 align=\"center\">Group 14</h4> <p>   <img alt=\"Version\" src=\"https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000\" />   <a href=\"#\" target=\"_blank\">     <img alt=\"License: ISC\" src=\"https://img.shields.io/badge/License-ISC-yellow.svg\" />   </a> </p>",
   "main": "scripts/deploy.ts",
   "scripts": {
-    "test": "npx hardhat test",
-    "deploy": "npx hardhat run --network goerli scripts/deploy.ts",
-    "compile": "npx hardhat compile",
-    "helloWorld:setText": "ts-node scripts/transactions/setText.ts",
+    "test": "yarn hardhat test",
+    "deploy": "yarn run ts-node --files scripts/deploy.ts",
+    "compile": "yarn hardhat compile",
+    "helloWorld:setText": "yarn run ts-node scripts/transactions/setText.ts",
     "lint:sol": "npx run solhint contracts/**/*.sol",
     "lint:ts": "eslint --max-warnings 7 --ext js,ts,json scripts test",
     "lint:ts:fix": "eslint --fix --ext js,ts,json,test.ts scripts test"
