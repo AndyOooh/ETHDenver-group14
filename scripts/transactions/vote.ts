@@ -4,10 +4,10 @@ import getBallotContract from "../utils/getBallotContract";
 
 dotenv.config();
 
-async function vote(contractAddress: string, proposalName: string): Promise<void> {
+async function vote(contractAddress: string, proposalNumber: string): Promise<void> {
   const ballot = getBallotContract(contractAddress);
   try {
-    const tx = await ballot.vote(ethers.utils.formatBytes32String(proposalName));
+    const tx = await ballot.vote(ethers.BigNumber.from(proposalNumber));
     await tx.wait();
   } catch (err) {
     throw new Error(err as string);
