@@ -1,8 +1,8 @@
-import {SignerWithAddress} from '@nomiclabs/hardhat-ethers/signers';
 import {HelloWorld} from './../typechain-types/HelloWorld';
 import {loadFixture} from '@nomicfoundation/hardhat-network-helpers';
 import {expect} from 'chai';
 import {ethers} from 'hardhat';
+import {SignerWithAddress} from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
 interface HelloWorldFixture {
 	helloWorld: HelloWorld;
@@ -19,7 +19,7 @@ describe("HelloWorld", () => {
 		const [owner, otherAccount] = await ethers.getSigners();
 
 		const HelloWorld = await ethers.getContractFactory('HelloWorld');
-		const helloWorld = await HelloWorld.deploy();
+		const helloWorld = await HelloWorld.deploy() as HelloWorld;
 
 		return {helloWorld, owner, otherAccount};
 	}
