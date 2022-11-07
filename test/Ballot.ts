@@ -72,7 +72,19 @@ describe('Ballot', async () => {
   });
 
   describe('when the voter interact with the delegate function in the contract', function () {
-    // TODO
+    // TODO ************************
+    it('can not delegate if voter has 0 weight', async () => {
+      throw Error('Not implemented');
+    });
+    it('can not delegate if the voter already voted', async () => {
+      throw Error('Not implemented');
+    });
+    it('can not delegate to sender', async () => {
+      throw Error('Not implemented');
+    });
+    it('if delegate already voted, it should add directly to that proposal', async () => {
+      throw Error('Not implemented');
+    });
     it('should transfer voting power', async () => {
       throw Error('Not implemented');
     });
