@@ -1,4 +1,4 @@
-import {SignerWithAddress} from '@nomiclabs/hardhat-ethers/signers';
+import {SignerWithAddress} from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 import {expect} from 'chai';
 import {ethers} from 'hardhat';
 import {Ballot} from '../typechain-types';
@@ -14,7 +14,7 @@ describe('Ballot', async () => {
   beforeEach(async () => {
     accounts = await ethers.getSigners();
     const ballotFactory = await ethers.getContractFactory('Ballot');
-    ballotContract = await ballotFactory.deploy(PROPOSALS_BYTES32); //awaiting tx being sent
+    ballotContract = await ballotFactory.deploy(PROPOSALS_BYTES32) as Ballot //awaiting tx being sent
     await ballotContract.deployed(); // awaiting deployment
   });
 
