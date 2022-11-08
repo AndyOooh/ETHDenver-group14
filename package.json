@@ -11,6 +11,7 @@
     "ballot:giveRightToVote": "yarn run ts-node scripts/transactions/giveRightToVote.ts <contractAddress> <voterAddress>",
     "ballot:vote": "yarn run ts-node scripts/transactions/vote.ts <contractAddress> <proposalName>",
     "ballot:delegate": "yarn run ts-node scripts/transactions/delegate.ts <contractAddress> <delegateToAddress>",
+    "ballot:getWinner": "yarn run ts-node scripts/transactions/getWinner.ts",
     "lint:sol": "yarn run solhint contracts/**/*.sol",
     "lint:ts": "eslint --max-warnings 7 --ext js,ts,json scripts test",
     "lint:ts:fix": "eslint --fix --ext js,ts,json,test.ts scripts test"
