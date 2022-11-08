@@ -10,6 +10,7 @@
 # Projects
 
 - [Week1](GroupProjects/Week1.md) 
+- [Week2](GroupProjects/Week2.md) 
 
 
 # Setup
@@ -18,17 +19,17 @@
 
 # Testing
 
-`npm run test`
+`yarn hardhat test` or `yarn hardhat coverage`
 
 # Linting
 - Lint TS/JS files: `npm run lint:ts`
 - Lint fix TS/JS files: `npm run lint:ts:fix`
 - Lint fix Solidity files: `npm run lint:sol`
 
-# Deploying with Hardhat
+# Deploying
 
 1. Add the env variables as specified in the example file
-2. `npm run deploy` to deploy to goerli
+2. `yarn deploy <contractName> <networkName> <constructorArgs>` where contractName is _PascalCase_ and networkName is _lowercase_
 
 # Transactions
 

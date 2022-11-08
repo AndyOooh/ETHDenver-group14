@@ -1,10 +1,9 @@
-
 import {deployBallot} from './deploy-ballot';
 import {deployHelloWorld} from './deploy-helloWorld';
 
 export const deploy = (): void => {
-  const contractArg = process.argv[2];
-  switch (contractArg) {
+  const contractName = process.argv[2];
+  switch (contractName) {
     case 'HelloWorld':
       deployHelloWorld();
       break;

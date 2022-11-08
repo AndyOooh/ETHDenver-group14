@@ -6,7 +6,7 @@ import 'dotenv/config';
 export const deployBallot = async (): Promise<void> => {
   const {ALCHEMY_API_KEY} = process.env;
   const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY as string; // getting linter issues if not assigning type.
-  const [networkArg, ...constructorArgs] = process.argv.slice(3);
+  const [networkName, ...constructorArgs] = process.argv.slice(3);
   if (!ALCHEMY_API_KEY) {
     throw new Error('ALCHEMY_API_KEY missing');
   }
@@ -16,7 +16,7 @@ export const deployBallot = async (): Promise<void> => {
   const PROPOSALS_BYTES32 = constructorArgs.map(p => ethers.utils.formatBytes32String(p));
   try {
     let ContractFactory: Ballot__factory;
-    if (networkArg === 'goerli') {
+    if (networkName === 'goerli') {
       // deploy to goerli
       const provider = new ethers.providers.AlchemyProvider('goerli', ALCHEMY_API_KEY);
       const wallet = new ethers.Wallet(GOERLI_PRIVATE_KEY, provider);
@@ -42,7 +42,7 @@ export const deployBallot = async (): Promise<void> => {
     }
     with proposals: ${proposals.map(p => ethers.utils.parseBytes32String(p.name))}`);
   } catch (error) {
-    throw new Error(error as string)
+    throw new Error(error as string);
     process.exitCode = 1;
   }
 };
