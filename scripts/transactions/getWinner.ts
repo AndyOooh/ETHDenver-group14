@@ -6,10 +6,10 @@ dotenv.config();
 
 async function getwinningProposal(contractAddress: string): Promise<void> {
   const ballot = getBallotContract(contractAddress);
-  let winningProposalVoteCount;
+  let winningProposalIndex;
   let winningProposalName;
   try {
-    winningProposalVoteCount = await ballot.winningProposal();
+    winningProposalIndex = await ballot.winningProposal();
   } catch (err) {
     throw new Error(err as string);
   }
@@ -19,7 +19,7 @@ async function getwinningProposal(contractAddress: string): Promise<void> {
   } catch (err) {
     throw new Error(err as string);
   }
-  console.log(`The winner is ${winningProposalName} with ${winningProposalVoteCount} votes`);
+  console.log(`The winner is ${winningProposalName} at index: ${winningProposalIndex}`);
 }
 
 getwinningProposal(process.argv[2]);

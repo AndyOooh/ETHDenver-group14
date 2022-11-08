@@ -24,6 +24,6 @@
 
 - 0xc0eae47b00e38682cc4f7239aa02004c2d1cd78f voted. tx hash: `0xc8423c54a820fac1d633d75d0be7f24f30bcb8def183feec24e748d58271a44b`
 
-
+- The winning proposal is 1: Milk.
 
 
