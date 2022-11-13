@@ -4,7 +4,7 @@ import getMyTokenContract from '../../utils/getMyTokenContract';
 
 async function delegate(
   contractAddress: string,
-  transferToAddress: string,
+  toAddress: string,
   amount: string,
 ): Promise<void> {
   const myTokenContract = getMyTokenContract(contractAddress);
@@ -13,7 +13,7 @@ async function delegate(
   const amountWei = ethers.utils.parseEther(amount);
 
   try {
-    const transferTx = await myTokenContract.transfer(transferToAddress, amountWei);
+    const transferTx = await myTokenContract.transfer(toAddress, amountWei);
     await transferTx.wait();
     console.log(`Delegate tx hash: ${transferTx.hash}`);
   } catch (err) {

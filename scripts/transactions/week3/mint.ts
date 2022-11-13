@@ -4,16 +4,16 @@ import getMyTokenContract from '../../utils/getMyTokenContract';
 
 async function mint(
   contractAddress: string,
-  mintToAddress: string,
+  toAddress: string,
   amount: string
 ): Promise<void> {
   const myTokenContract = getMyTokenContract(contractAddress);
   const amountWei = ethers.utils.parseEther(amount);
 
   try {
-    const mintTx = await myTokenContract.mint(mintToAddress, amountWei);
+    const mintTx = await myTokenContract.mint(toAddress, amountWei);
     await mintTx.wait();
-    console.log(`Minted ${amount} decimal units to account ${mintToAddress}`);
+    console.log(`Minted ${amount} decimal units to account ${toAddress}`);
   } catch (err) {
     throw new Error(err as string);
   }
