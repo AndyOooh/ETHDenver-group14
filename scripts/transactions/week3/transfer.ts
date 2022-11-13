@@ -8,14 +8,12 @@ async function delegate(
   amount: string,
 ): Promise<void> {
   const myTokenContract = getMyTokenContract(contractAddress);
-//   const provider = new ethers.providers.AlchemyProvider('goerli', process.env.ALCHEMY_API_KEY);
-//   const signer = new ethers.Wallet(process.env.GOERLI_PRIVATE_KEY, provider);
   const amountWei = ethers.utils.parseEther(amount);
 
   try {
     const transferTx = await myTokenContract.transfer(toAddress, amountWei);
     await transferTx.wait();
-    console.log(`Delegate tx hash: ${transferTx.hash}`);
+    console.log(`${amount} tokens transferred to ${toAddress}`);
   } catch (err) {
     throw new Error(err as string);
   }

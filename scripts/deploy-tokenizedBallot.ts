@@ -2,7 +2,7 @@ import 'dotenv/config';
 import {ethers} from 'hardhat';
 import {TokenizedBallot__factory} from '../typechain-types';
 
-export const DeployTokenizedBallot = async (): Promise<void> => {
+export const deployTokenizedBallot = async (): Promise<void> => {
   const {ALCHEMY_API_KEY} = process.env;
   const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY as string; // getting linter issues if not assigning type.
   const [networkName, myTokenAddress, ...proposals] = process.argv.slice(3);
@@ -24,19 +24,20 @@ export const DeployTokenizedBallot = async (): Promise<void> => {
       const signer = wallet.connect(provider);
       ContractFactory = new TokenizedBallot__factory(signer);
       const lastBlock = await ethers.provider.getBlock('latest');
-      blockNumber = lastBlock.number -1;
+      blockNumber = lastBlock.number - 1; // set this is argument instead? use a blocknumber 12 hours in the future?
     } else {
       const accounts = await ethers.getSigners();
       ContractFactory = new TokenizedBallot__factory(accounts[0]);
       blockNumber = 0;
     }
     console.log('deploying TokenizedBallot contract...');
-    const contract = await ContractFactory.deploy(
-      PROPOSALS_BYTES32,
-      myTokenAddress,
-      blockNumber
-    );
+    const contract = await ContractFactory.deploy(PROPOSALS_BYTES32, myTokenAddress, blockNumber);
     await contract.deployed();
+
+    console.log(`Contract TokenizedBallot deployed to: ${contract.address} on chainId: ${
+      contract.deployTransaction.chainId
+    }
+    with proposals: ${proposals.map(p => p)}`);
   } catch (error) {
     process.exitCode = 1;
     throw new Error(error as string);
