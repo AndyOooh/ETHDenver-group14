@@ -1,21 +1,19 @@
-import * as dotenv from 'dotenv';
+import 'dotenv/config';
 import {ethers} from 'hardhat';
 import getMyTokenContract from '../../utils/getMyTokenContract';
 
-dotenv.config();
-
 async function mint(
   contractAddress: string,
-  mintToToAddress: string,
+  mintToAddress: string,
   amount: string
 ): Promise<void> {
   const myTokenContract = getMyTokenContract(contractAddress);
   const amountWei = ethers.utils.parseEther(amount);
 
   try {
-    const mintTx = await myTokenContract.mint(mintToToAddress, amountWei);
+    const mintTx = await myTokenContract.mint(mintToAddress, amountWei);
     await mintTx.wait();
-    console.log(`Minted ${amount} decimal units to account ${mintToToAddress}`);
+    console.log(`Minted ${amount} decimal units to account ${mintToAddress}`);
   } catch (err) {
     throw new Error(err as string);
   }

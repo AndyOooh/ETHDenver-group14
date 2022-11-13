@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import {ethers} from 'hardhat';
 import {MyToken, MyToken__factory} from '../typechain-types';
 

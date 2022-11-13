@@ -1,9 +1,7 @@
+import 'dotenv/config';
 import {ethers} from 'ethers';
-import * as dotenv from 'dotenv';
 import {MyToken} from '../../typechain-types/contracts/MyToken';
 import {MyToken__factory} from '../../typechain-types/factories/contracts/MyToken__factory';
-
-dotenv.config();
 
 function getMyTokenContract(contractAddress: string): MyToken {
   if (!process.env.GOERLI_PRIVATE_KEY) {

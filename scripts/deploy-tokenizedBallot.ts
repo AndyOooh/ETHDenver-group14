@@ -1,19 +1,20 @@
+import 'dotenv/config';
 import {ethers} from 'hardhat';
 import {TokenizedBallot__factory} from '../typechain-types';
-import {deployMyToken} from './deploy-myToken';
 
 export const DeployTokenizedBallot = async (): Promise<void> => {
   const {ALCHEMY_API_KEY} = process.env;
   const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY as string; // getting linter issues if not assigning type.
-  const [networkName, ...constructorArgs] = process.argv.slice(3);
+  const [networkName, myTokenAddress, ...proposals] = process.argv.slice(3);
 
-  if (!constructorArgs || constructorArgs.length === 0) {
+  if (!proposals || proposals.length === 0) {
     throw new Error('You need to pass a valid constructor argument');
   }
-  const PROPOSALS_BYTES32 = constructorArgs.map(p => ethers.utils.formatBytes32String(p));
+  const PROPOSALS_BYTES32 = proposals.map(p => ethers.utils.formatBytes32String(p));
 
   try {
     let ContractFactory: TokenizedBallot__factory;
+    let blockNumber: number;
     if (networkName === 'goerli') {
       if (!ALCHEMY_API_KEY) {
         throw new Error('ALCHEMY_API_KEY missing');
@@ -22,17 +23,18 @@ export const DeployTokenizedBallot = async (): Promise<void> => {
       const wallet = new ethers.Wallet(GOERLI_PRIVATE_KEY, provider);
       const signer = wallet.connect(provider);
       ContractFactory = new TokenizedBallot__factory(signer);
+      const lastBlock = await ethers.provider.getBlock('latest');
+      blockNumber = lastBlock.number -1;
     } else {
       const accounts = await ethers.getSigners();
       ContractFactory = new TokenizedBallot__factory(accounts[0]);
+      blockNumber = 0;
     }
-    const myTokenAddress = deployMyToken();
-    const lastBlock = await ethers.provider.getBlock('latest');
-    console.log(`Curent block number is ${lastBlock.number}`);
+    console.log('deploying TokenizedBallot contract...');
     const contract = await ContractFactory.deploy(
       PROPOSALS_BYTES32,
       myTokenAddress,
-      lastBlock.number === 0 ? 0 : lastBlock.number - 1
+      blockNumber
     );
     await contract.deployed();
   } catch (error) {
