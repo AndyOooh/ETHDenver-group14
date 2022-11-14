@@ -7,9 +7,12 @@
 
 - @andyoooh minted MTK contract. tx hash: `0x894c8bdb6d2b4e686999b6bc1ccc57af7eecb6b73f93a86d2802e7deb9fd848d`
 
+- @andyoooh delegate votes to himself. tx hash:
+`0x5996078eb542f2e6246e81efc2b2a0d5cc7afb52ef8187da09669c19b730be67`
+
 - @andyoooh transfered MTK tokens to @JoaoF17. tx hash: `0x9ecb14830234e7766093020b3b7f137e029f871f2a8fd6e9ccf1bcb4019fc7d7`
 
-- @andyoooh created tokenizedBallot. tx hash `0x081544dee592b64b1c1de7badf132d1bfbb194117674d589dc64d39bb1e3e78b`
+- tokenizedBallot Contract created: `0xC8e4d4411526d6E9391d7C75D73ac8438B3AaA20`
 
 - @andyoooh voted at tx hash: `0x854e357ddd98ce9a5088f097a87190d9a6da62bb4abe9f6caf1faf7a50174086`
 
