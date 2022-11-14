@@ -14,7 +14,11 @@
     "ballot:getWinner": "yarn run ts-node scripts/transactions/getWinner.ts",
     "lint:sol": "yarn run solhint contracts/**/*.sol",
     "lint:ts": "eslint --max-warnings 7 --ext js,ts,json scripts test",
-    "lint:ts:fix": "eslint --fix --ext js,ts,json,test.ts scripts test"
+    "lint:ts:fix": "eslint --fix --ext js,ts,json,test.ts scripts test",
+    "myToken:mint": "yarn run ts-node scripts/transactions/week3/mint.ts <contractAddress> <toAddress> <amount>",
+    "myToken:getVotes": "yarn run ts-node scripts/transactions/week3/getVotes.ts <contractAddress> <atAddress>",
+    "myToken:delegate": "yarn run ts-node scripts/transactions/week3/delegate.ts <contractAddress>",
+    "myToken:transfer": "yarn run ts-node scripts/transactions/week3/transfer.ts <contractAddress> <toAddress> <amount>"
   },
   "repository": {
     "type": "git",
@@ -38,6 +42,7 @@
     "@nomicfoundation/hardhat-toolbox": "2.0.0",
     "@nomiclabs/hardhat-ethers": "2.0.0",
     "@nomiclabs/hardhat-etherscan": "3.0.0",
+    "@openzeppelin/contracts": "^4.8.0",
     "@typechain/ethers-v5": "10.1.0",
     "@typechain/hardhat": "6.1.2",
     "@types/chai": "4.2.0",
@@ -59,5 +64,6 @@
     "ts-node": "10.9.1",
     "typechain": "8.1.0",
     "typescript": "4.8.4"
-  }
+  },
+  "dependencies": {}
 }
