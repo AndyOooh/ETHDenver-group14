@@ -1,14 +1,15 @@
 import 'dotenv/config';
+import { ethers } from 'hardhat';
 import getTokenizedBallotContract from '../../utils/getTokenizedBallotContract';
 
 async function vote(contractAddress: string, proposal: string, amount: string): Promise<void> {
   const tokenizedBallotContract = getTokenizedBallotContract(contractAddress);
-  console.log('🚀 ~ file: vote.ts ~ line 5 ~ proposal', proposal, typeof proposal)
+
+  const amountToEth = ethers.utils.parseEther(amount);
 
   try {
-    const voteTx = await tokenizedBallotContract.vote(proposal, amount);
-    console.log('🚀 ~ file: vote.ts ~ line 9 ~ voteTx', voteTx);
-    console.log(`${voteTx.from} used ${amount} voting power to vote for proposal ${proposal}`);
+    const voteTx = await tokenizedBallotContract.vote(proposal, amountToEth);
+    console.log(`${voteTx.from} used ${+amountToEth / 1e18} voting power to vote for proposal ${proposal}`);
   } catch (err) {
     throw new Error(err as string);
   }

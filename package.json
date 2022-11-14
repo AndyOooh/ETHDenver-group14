@@ -20,7 +20,8 @@
     "myToken:delegate": "yarn run ts-node scripts/transactions/week3/delegate.ts <contractAddress>",
     "myToken:transfer": "yarn run ts-node scripts/transactions/week3/transfer.ts <contractAddress> <toAddress> <amount>",
     "tokenizedBallot:getVotingPower": "yarn run ts-node scripts/transactions/week3/getVotingPower.ts <contractAddress> <accountAddress>",
-    "tokenizedBallot:vote": "yarn run ts-node scripts/transactions/week3/vote.ts "
+    "tokenizedBallot:vote": "yarn run ts-node scripts/transactions/week3/vote.ts <contractAddress> <proposalIndex> <amount>",
+    "tokenizedBallot:getWinner": "yarn run ts-node scripts/transactions/week3/getWinner.ts <contractAddress>"
   },
   "repository": {
     "type": "git",
