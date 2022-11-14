@@ -3,7 +3,7 @@
 
 ## Report
 
-- My Token Contract created: `0xCa3896d054Abd3ee5e9dC56b2e374a854EE5e5b3`
+- My Token Contract created: `0x70081C71aadf11C35b78c0A7f57FA84F22622D36`
 
 - @andyoooh deployed Ballot contract. tx hash: `0xae0d270ce3388e7ebb0acd3e2b64069d76009235648fea39481758d518e27fd1`
 
