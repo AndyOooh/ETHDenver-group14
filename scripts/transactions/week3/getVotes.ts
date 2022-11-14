@@ -7,7 +7,6 @@ async function getVotes(contractAddress: string, atAddress: string): Promise<voi
   try {
     const getVotesTx = await myTokenContract.getVotes(atAddress);
     console.log(`${atAddress} has ${getVotesTx} votes`);
-    // return getVotesTx;
   } catch (err) {
     throw new Error(err as string);
   }

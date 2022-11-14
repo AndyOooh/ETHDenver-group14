@@ -4,7 +4,7 @@ import 'dotenv/config';
 
 // Go to https://www.alchemyapi.io, sign up, create
 // a new App in its dashboard, and replace "KEY" with its key
-const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY;
+const {ALCHEMY_API_KEY, ETHERSCAN_API_KEY, GAS_REPORTER_ENABLED, CMC_API_KEY} = process.env;
 
 // Replace this private key with your Goerli account private key
 // To export your private key from Metamask, open Metamask and
@@ -23,13 +23,25 @@ const config: HardhatUserConfig = {
   networks: {
     goerli: {
       url: `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
-      accounts: [GOERLI_PRIVATE_KEY],
-    },
+      accounts: [GOERLI_PRIVATE_KEY]
+    }
     // fuji: {
     //   url: "https://api.avax-test.network/ext/bc/C/rpc",
     //   accounts: [FUJI_PRIVATE_KEY],
     // }
   },
+  etherscan: {
+    apiKey: ETHERSCAN_API_KEY
+  },
+  gasReporter: {
+    enabled: GAS_REPORTER_ENABLED === 'true' ? true : false, // running gas reporter slows down tests significantly
+    outputFile: 'gas-report.txt',
+    noColors: true,
+    currency: 'USD',
+    // gasPrice: 21,
+    coinmarketcap: CMC_API_KEY, // needed for currency to work
+    token: 'ETH'
+  }
 };
 
 export default config;

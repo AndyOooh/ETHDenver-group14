@@ -2,7 +2,7 @@ import 'dotenv/config';
 import {ethers} from 'hardhat';
 import getMyTokenContract from '../../utils/getMyTokenContract';
 
-async function delegate(
+async function transfer(
   contractAddress: string,
   toAddress: string,
   amount: string,
@@ -19,4 +19,4 @@ async function delegate(
   }
 }
 
-delegate(process.argv[2], process.argv[3], process.argv[4]);
+transfer(process.argv[2], process.argv[3], process.argv[4]);
