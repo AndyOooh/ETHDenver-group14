@@ -20,7 +20,6 @@ export const deployMyToken = async (): Promise<void> => {
       const signer = wallet.connect(provider);
       contractFactory = new MyToken__factory(signer);
     } else {
-      console.log('in else of deployMyToken');
       const accounts = await ethers.getSigners();
       contractFactory = new MyToken__factory(accounts[0]);
     }

@@ -3,8 +3,9 @@ import {ethers} from 'hardhat';
 import {TokenizedBallot__factory} from '../typechain-types';
 
 export const deployTokenizedBallot = async (): Promise<void> => {
-  const {ALCHEMY_API_KEY} = process.env;
-  const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY as string; // getting linter issues if not assigning type.
+  if (typeof process.env.GOERLI_PRIVATE_KEY !== 'string') return;
+  const {ALCHEMY_API_KEY, GOERLI_PRIVATE_KEY} = process.env;
+  // const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY as string; // getting linter issues if not assigning type.
   const [networkName, myTokenAddress, ...proposals] = process.argv.slice(3);
 
   if (!proposals || proposals.length === 0) {
@@ -14,7 +15,7 @@ export const deployTokenizedBallot = async (): Promise<void> => {
 
   try {
     let ContractFactory: TokenizedBallot__factory;
-    let blockNumber: number;
+    let targetBlockNumber: number;
     if (networkName === 'goerli') {
       if (!ALCHEMY_API_KEY) {
         throw new Error('ALCHEMY_API_KEY missing');
@@ -24,14 +25,14 @@ export const deployTokenizedBallot = async (): Promise<void> => {
       const signer = wallet.connect(provider);
       ContractFactory = new TokenizedBallot__factory(signer);
       const lastBlock = await ethers.provider.getBlock('latest');
-      blockNumber = lastBlock.number - 1; // set this is argument instead? use a blocknumber 12 hours in the future?
+      targetBlockNumber = lastBlock.number - 1; // set this is argument instead? use a blocknumber 12 hours in the future?
     } else {
       const accounts = await ethers.getSigners();
       ContractFactory = new TokenizedBallot__factory(accounts[0]);
-      blockNumber = 0;
+      targetBlockNumber = 0;
     }
     console.log('deploying TokenizedBallot contract...');
-    const contract = await ContractFactory.deploy(PROPOSALS_BYTES32, myTokenAddress, blockNumber);
+    const contract = await ContractFactory.deploy(PROPOSALS_BYTES32, myTokenAddress, targetBlockNumber);
     await contract.deployed();
 
     console.log(`Contract TokenizedBallot deployed to: ${contract.address} on chainId: ${

@@ -27,7 +27,7 @@
         "no-console": "off",
         "max-len": ["error", {"code": 172}],
         "@next/next/no-img-element": "off",
-        "curly": "error",
+        "curly": "off",
         "no-async-promise-executor": "warn",
         "n/no-unpublished-import": "off",
         "n/no-unsupported-features/node-builtins": "error",
