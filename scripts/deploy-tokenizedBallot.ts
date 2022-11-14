@@ -26,13 +26,21 @@ export const deployTokenizedBallot = async (): Promise<void> => {
       ContractFactory = new TokenizedBallot__factory(signer);
       const lastBlock = await ethers.provider.getBlock('latest');
       targetBlockNumber = lastBlock.number - 1; // set this is argument instead? use a blocknumber 12 hours in the future?
-    } else {
+    } else if (networkName === 'localhost' || networkName === 'hardhat') {
       const accounts = await ethers.getSigners();
       ContractFactory = new TokenizedBallot__factory(accounts[0]);
       targetBlockNumber = 0;
+    } else if (networkName === 'mainnet') {
+      throw new Error('Mainnet not implemented');
+    } else {
+      throw new Error('Invalid network name');
     }
-    console.log('deploying TokenizedBallot contract...');
-    const contract = await ContractFactory.deploy(PROPOSALS_BYTES32, myTokenAddress, targetBlockNumber);
+    console.log(`deploying TokenizedBallot contract on network: ${networkName}`);
+    const contract = await ContractFactory.deploy(
+      PROPOSALS_BYTES32,
+      myTokenAddress,
+      targetBlockNumber
+    );
     await contract.deployed();
 
     console.log(`Contract TokenizedBallot deployed to: ${contract.address} on chainId: ${
