@@ -1,3 +1,51 @@
 {
-  "extends": "next/core-web-vitals"
+    // "ignorePatterns": ["/week*"],
+    "extends": [
+        "plugin:import/typescript",
+        "plugin:import/recommended",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:n/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "brace-style": "error",
+        "object-curly-spacing": ["error", "never"],
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "import/first": "error",
+        "import/newline-after-import": "error",
+        "import/no-duplicates": "error",
+        "import/no-named-as-default": "off",
+        "import/no-unresolved": "warn",
+        "no-mixed-spaces-and-tabs": 0,
+        "no-console": "off",
+        "max-len": ["error", {"code": 172}],
+        "@next/next/no-img-element": "off",
+        "curly": "off",
+        "no-async-promise-executor": "warn",
+        "n/no-unpublished-import": "off",
+        "n/no-unsupported-features/node-builtins": "error",
+        "n/shebang": "error",
+        "n/no-extraneous-import": "off",
+        "n/handle-callback-err": "error",
+        "n/no-callback-literal": "error",
+        "n/no-unpublished-bin": "warn",
+        "no-unused-vars": "off",
+        "no-undef": "off",
+        "n/no-process-exit": "warn",
+        "n/no-missing-import": "off",
+        "n/no-unsupported-features/es-syntax": [
+            "error",
+            {
+                "version": ">=16.10.0"
+            }
+        ]
+    }
 }
