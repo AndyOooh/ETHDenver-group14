@@ -1,5 +1,5 @@
 export const erc20Data: contractData = {
-  address: '0x70081C71aadf11C35b78c0A7f57FA84F22622D36',
+  address: '0xD9A9472bDCddb5968Fe4378E5127C339c64307bF',
   abi: [
     {
       inputs: [],

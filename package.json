@@ -5,7 +5,7 @@
   "main": "scripts/deploy.ts",
   "scripts": {
     "test": "yarn hardhat test",
-    "deploy": "yarn run ts-node --files scripts/deploy.ts <contractName> <networkName> <constructorArgs>",
+    "deploy": "yarn run ts-node --files scripts/deploy.ts ",
     "compile": "yarn hardhat compile",
     "helloWorld:setText": "yarn run ts-node scripts/transactions/setText.ts",
     "ballot:giveRightToVote": "yarn run ts-node scripts/transactions/giveRightToVote.ts <contractAddress> <voterAddress>",

@@ -5,11 +5,7 @@ import {TokenizedBallot__factory} from '../typechain-types';
 export const deployTokenizedBallot = async (): Promise<void> => {
   if (typeof process.env.GOERLI_PRIVATE_KEY !== 'string') return;
   const {ALCHEMY_API_KEY, GOERLI_PRIVATE_KEY} = process.env;
-  // const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY as string; // getting linter issues if not assigning type.
   const [networkName, myTokenAddress, ...proposals] = process.argv.slice(3);
-  console.log('🚀 ~ file: deploy-tokenizedBallot.ts ~ line 10 ~ proposals', proposals);
-  console.log('🚀 ~ file: deploy-tokenizedBallot.ts ~ line 10 ~ myTokenAddress', myTokenAddress);
-  console.log('🚀 ~ file: deploy-tokenizedBallot.ts ~ line 10 ~ networkName', networkName);
 
   if (!proposals || proposals.length === 0) {
     throw new Error('You need to pass a valid constructor argument');
@@ -28,10 +24,8 @@ export const deployTokenizedBallot = async (): Promise<void> => {
       const signer = wallet.connect(provider);
       ContractFactory = new TokenizedBallot__factory(signer);
       const lastBlock = await provider.getBlock('latest');
-      console.log('🚀 ~ file: deploy-tokenizedBallot.ts ~ line 28 ~ lastBlock', lastBlock);
       targetBlockNumber = lastBlock.number - 1; // set this is argument instead? use a blocknumber 12 hours in the future?
     } else if (networkName === 'localhost' || networkName === 'hardhat') {
-      console.log('in network == localhost');
       const accounts = await ethers.getSigners();
       ContractFactory = new TokenizedBallot__factory(accounts[0]);
       targetBlockNumber = 0;

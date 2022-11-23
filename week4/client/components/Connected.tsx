@@ -20,13 +20,14 @@ type Proposal = {
 };
 
 export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}) => {
+  const [myTokenContract, setMyTokenContract] = useState<ethers.Contract | null>(null);
   const [ballotContract, setBallotContract] = useState<ethers.Contract | null>(null);
-  const [balanceMTK, setBalanceMTK] = useState<number | null>(null);
+  const [balanceWEEK4, setBalanceWEEK4] = useState<number | null>(null);
   const [balanceETH, setBalanceETH] = useState<number | null>(null);
   const [votingPower, setVotingPower] = useState<number>(0);
-  const [status, setStatus] = useState<'loading' | 'idle' | 'requestingTokens' | 'voting'>(
-    'loading'
-  );
+  const [status, setStatus] = useState<
+    'loading' | 'idle' | 'requestingTokens' | 'delegatingVotes' | 'voting'
+  >('loading');
   const [voteData, setVoteData] = useState<VoteData | null>(null);
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [proposals, setProposals] = useState<Proposal[] | null>(null);
@@ -49,8 +50,13 @@ export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}
       const [myTokenData, ballotData] = data;
       const signer = provider?.getSigner(connectedAddress);
       const _MyTokenContract = new ethers.Contract(myTokenData.address, myTokenData.abi, signer);
-      const _MTKBalance = await _MyTokenContract.balanceOf(connectedAddress);
-      setBalanceMTK(parseFloat(ethers.utils.formatEther(_MTKBalance)));
+      console.log('🚀 ~ file: Connected.tsx ~ line 53 ~ _MyTokenContract', _MyTokenContract)
+      setMyTokenContract(_MyTokenContract);
+      console.log('before*****************')
+      console.log('🚀 ~ file: Connected.tsx ~ line 57 ~ connectedAddress', connectedAddress)
+      const _WEEK4Balance = await _MyTokenContract.balanceOf(connectedAddress);
+      console.log('after*****************')
+      setBalanceWEEK4(parseFloat(ethers.utils.formatEther(_WEEK4Balance)));
       const _ETHBalance = await provider?.getBalance(connectedAddress);
       // Use if to satisfy ts.
       if (_ETHBalance) {
@@ -64,7 +70,8 @@ export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}
       setProposals(_proposals);
       setStatus('idle');
     } catch (error) {
-      throw new Error(error);
+      console.log(error)
+      // throw new Error(error);
     }
   };
 
@@ -87,11 +94,23 @@ export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}
       await api.post('/request-tokens', {
         toAddress: connectedAddress
       });
-      console.log(`Minted 2e18 tokens to ${connectedAddress}`);
-      initialize();
-    } catch (err) {
+      console.log(`Minted 2 WEEK4 to ${connectedAddress}`);
+      setBalanceWEEK4(prev => (prev ? prev + 2 : 2));
+    } catch (error) {
       //  Should maybe log it instead
-      throw new Error(err as string);
+      console.log(error);
+    }
+    setStatus('idle');
+  };
+
+  const handleDelegateVotes = async (): Promise<void> => {
+    setStatus('delegatingVotes');
+    try {
+      const txResponse = await myTokenContract?.delegate(connectedAddress);
+      await txResponse.wait();
+      initialize();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -132,7 +151,7 @@ export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}
           <span>Ether Balance:</span> <span>{balanceETH}</span>{' '}
         </div>
         <div className="card">
-          <span>MTK Balance:</span> <span>{balanceMTK}</span>{' '}
+          <span>WEEK4 Balance:</span> <span>{balanceWEEK4}</span>{' '}
         </div>
         <div className="card">
           <span>Voting Power:</span> <span>{votingPower}</span>{' '}
@@ -141,12 +160,9 @@ export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}
 
       <p className="text-2xl text-slate-50 mt-6">Vote count</p>
       <div className="m flex gap-7  text-slate-200 text-lg font-medium">
-        {proposals?.map((proposal, index) => (
+        {proposals?.map(proposal => (
           <div key={proposal.name} className="flex flex-col">
-            <span>
-              {index}: {proposal.name}{' '}
-            </span>{' '}
-            <span>{proposal.voteCount}</span>{' '}
+            <span>{proposal.name} </span> <span>{proposal.voteCount}</span>{' '}
           </div>
         ))}
       </div>
@@ -155,23 +171,33 @@ export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}
         <div className="flex flex-col gap-8 items-center  mt-8">
           <p className="text-xl text-orange-400 font-bold">
             Hang on.
-            {status === 'voting' ? ' Placing your votes' : ' Minting 2 MTK tokens to your wallet'}.
+            {status === 'voting' ? ' Placing your votes' : ' Minting 2 WEEK4 tokens to your wallet'}.
             This could take up to a minute depending on network activity...
           </p>
           <HashLoader color="#FB923C" size={60} aria-label="Loading Spinner" data-testid="loader" />
         </div>
       ) : (
-        <div
-          id="buttons"
-          className="h-40 min-w-lg max-w-lg grid grid-flow-rows gap-6 mt-5 text-xl whitespace-nowrap sm:h-16 sm:grid-flow-rows  "
-        >
-          <button
-            onClick={handleRequestTokens}
-            disabled={false}
-            className=" bg-yellow-200 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow-lg shadow-zinc-800"
+        <>
+          <div
+            id="buttons"
+            className="min-w-lg max-w-lg flex gap-4 my-5 text-lg whitespace-nowrap "
           >
-            Request tokens
-          </button>
+            <button
+              onClick={handleRequestTokens}
+              disabled={false}
+              className=" bg-yellow-200 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow-lg shadow-zinc-800"
+            >
+              Request tokens
+            </button>
+            <button
+              onClick={handleDelegateVotes}
+              disabled={false}
+              className=" bg-yellow-200 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow-lg shadow-zinc-800"
+            >
+              Delegate votes
+            </button>
+          </div>
+
           <form onSubmit={handleVote} className="flex flex-col gap-3">
             <div className="flex justify-around gap-6 text-lg font-semibold text-orange-500">
               {proposals?.map(({name}, index) => (
@@ -210,7 +236,7 @@ export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}
               </button>
             </div>
           </form>
-        </div>
+        </>
       )}
     </>
   );

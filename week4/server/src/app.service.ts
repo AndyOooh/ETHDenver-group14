@@ -1,9 +1,9 @@
 import {Injectable} from '@nestjs/common';
 import {ethers} from 'ethers';
 
-import * as tokenJson from '../assets/MyToken.json';
-import {erc20Data} from 'ER20Constants';
-import {tokenBallotData} from 'tokenBallotConstants';
+import * as tokenJson from 'assets/MyToken.json';
+import {erc20Data} from 'assets/ER20Constants';
+import {tokenBallotData} from 'assets/tokenBallotConstants';
 
 @Injectable()
 export class AppService {
@@ -36,11 +36,11 @@ export class AppService {
     // hardcoded to 2 ether
     const amount = '2';
     const amountWei = ethers.utils.parseEther(amount);
-    console.log('Requesting to mint...')
+    console.log('Requesting to mint...');
     try {
       const mintTx = await this.erc20Contract.mint(toAddress, amountWei);
       await mintTx.wait();
-      console.log('🚀 ~ file: app.service.ts ~ line 42 ~ mintTx', mintTx)
+      console.log('🚀 ~ file: app.service.ts ~ line 42 ~ mintTx', mintTx);
       console.log(`Minted ${amount} decimal units to account ${toAddress}`);
       return;
     } catch (err) {

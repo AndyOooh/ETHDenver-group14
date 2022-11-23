@@ -1,5 +1,5 @@
 export const tokenBallotData: contractData = {
-  address: '0xC8e4d4411526d6E9391d7C75D73ac8438B3AaA20',
+  address: '0x6c964E94720B43e7fbdCf4CF8b06C516B182cCEb',
   abi: [
     {
       inputs: [
