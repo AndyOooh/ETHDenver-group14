@@ -28,7 +28,7 @@ export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}
   const [status, setStatus] = useState<
     'loading' | 'idle' | 'requestingTokens' | 'delegatingVotes' | 'voting'
   >('loading');
-  const [voteData, setVoteData] = useState<VoteData | null>(null);
+  const [voteData, setVoteData] = useState<VoteData | null>({proposal: '', amount: 1});
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [proposals, setProposals] = useState<Proposal[] | null>(null);
 
@@ -50,12 +50,12 @@ export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}
       const [myTokenData, ballotData] = data;
       const signer = provider?.getSigner(connectedAddress);
       const _MyTokenContract = new ethers.Contract(myTokenData.address, myTokenData.abi, signer);
-      console.log('🚀 ~ file: Connected.tsx ~ line 53 ~ _MyTokenContract', _MyTokenContract)
+      console.log('🚀 ~ file: Connected.tsx ~ line 53 ~ _MyTokenContract', _MyTokenContract);
       setMyTokenContract(_MyTokenContract);
-      console.log('before*****************')
-      console.log('🚀 ~ file: Connected.tsx ~ line 57 ~ connectedAddress', connectedAddress)
+      console.log('before*****************');
+      console.log('🚀 ~ file: Connected.tsx ~ line 57 ~ connectedAddress', connectedAddress);
       const _WEEK4Balance = await _MyTokenContract.balanceOf(connectedAddress);
-      console.log('after*****************')
+      console.log('after*****************');
       setBalanceWEEK4(parseFloat(ethers.utils.formatEther(_WEEK4Balance)));
       const _ETHBalance = await provider?.getBalance(connectedAddress);
       // Use if to satisfy ts.
@@ -70,7 +70,7 @@ export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}
       setProposals(_proposals);
       setStatus('idle');
     } catch (error) {
-      console.log(error)
+      console.log(error);
       // throw new Error(error);
     }
   };
@@ -171,8 +171,8 @@ export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}
         <div className="flex flex-col gap-8 items-center  mt-8">
           <p className="text-xl text-orange-400 font-bold">
             Hang on.
-            {status === 'voting' ? ' Placing your votes' : ' Minting 2 WEEK4 tokens to your wallet'}.
-            This could take up to a minute depending on network activity...
+            {status === 'voting' ? ' Placing your votes' : ' Minting 2 WEEK4 tokens to your wallet'}
+            . This could take up to a minute depending on network activity...
           </p>
           <HashLoader color="#FB923C" size={60} aria-label="Loading Spinner" data-testid="loader" />
         </div>
@@ -223,14 +223,19 @@ export const Connected: NextPage<ConnectedProps> = ({provider, connectedAddress}
                 max={+votingPower}
                 name="amount"
                 id="amount"
-                placeholder="amount"
-                className="text-lg text-center border-none  bg-slate-50  placeholder-black p-2"
+                placeholder="1"
+                // eslint-disable-next-line max-len
+                className=" text-white  
+                placeholder-white
+                
+                even-inner-shadow  
+                 rounded-md border-solid text-lg text-center  bg-white bg-opacity-25 p-2"
               />
               <button
                 type="submit"
                 disabled={!isFormValid}
                 // eslint-disable-next-line max-len
-                className="disabled:bg-gray-300 bg-orange-400 px-28 hover:bg-gray-100 text-gray-800 font-semibold py-2 border border-gray-400 rounded-xl shadow-lg shadow-zinc-800"
+                className=" even-shadow disabled:bg-gray-300 bg-orange-400 px-28 hover:bg-gray-100 text-gray-800 font-semibold py-2 border rounded-xl shadow-lg shadow-zinc-800"
               >
                 vote
               </button>
