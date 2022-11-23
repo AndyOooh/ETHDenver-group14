@@ -4,54 +4,75 @@ import {useEffect, useState} from 'react';
 import {ethers} from 'ethers';
 
 import {Welcome} from '../components/Welcome';
+import {HashLoader} from 'react-spinners';
 import {Connected} from '../components/Connected';
 
-// TODO listen for disconnect event and remove from LS.
-
 const Home: NextPage = () => {
-  const [walletConnection, setWalletConnection] = useState<string | null>(null);
-  const [provider, setProvider] = useState<ethers.providers.Web3Provider | null>(null);
-  const [connectedAddress, setConnectedAddress] = useState('');
-  console.log('🚀 ~ file: index.tsx ~ line 12 ~ provider', provider)
-
-  // Move to <Connected /> component
-  const walletString = connectedAddress?.slice(0, 6) + '...' + connectedAddress?.slice(-4);
-  // Move to <Connected /> component
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
+  const [chainId, setChainId] = useState<number>();
+  const [connectedAddress, setConnectedAddress] = useState<string | null>(null);
 
   useEffect(() => {
-    const connect = async (): Promise<void> => {
-      //  This is not ideal. Check ls then check ethereum? Logic doesn't add up.
-      const connection = localStorage.getItem('connection');
-      setWalletConnection(connection);
-      if (typeof window?.ethereum !== 'undefined') {
-        const provider = new ethers.providers.Web3Provider(window?.ethereum);
-        const accounts: string[] = await provider.listAccounts();
-        setConnectedAddress(accounts[0]);
-        console.log('🚀 ~ file: index.tsx ~ line 23 ~ accounts', accounts);
-        const signer = provider.getSigner(0);
-        console.log('🚀 ~ file: index.tsx ~ line 23 ~ signer', signer);
-        setProvider(provider);
-      }
+    if (!window.ethereum) return;
+    initialize();
+    if (localStorage.getItem('connection')) {
+      connectWallet();
+    }
+    setIsLoading(false);
+    return () => {
+      window.ethereum.removeAllListeners();
     };
-    connect();
   }, []);
 
-  const handleCreateDummy = async (): Promise<void> => {
-    console.log('lala');
+  const initialize = async (): Promise<void> => {
+    const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+    window.ethereum.on('accountsChanged', handleAccountChange);
+    window.ethereum.on('chainChanged', handleChainChange);
+    setProvider(web3Provider);
+    setChainId(parseInt(window.ethereum.chainId));
+  };
+
+  const connectWallet = async (): Promise<string | void> => {
+    try {
+      const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
+      setConnectedAddress(accounts[0]);
+      setIsLoading(false);
+      return 'ok'; // TODO
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleConnectMetamask = async (): Promise<void> => {
-    if (!window?.ethereum) {
+    if (!window.ethereum || !window.ethereum.isMetaMask) {
+      // replace with button to install metamask
       alert('Please install Metamask');
       return;
     } else {
-      const response = await ethereum.request({method: 'eth_requestAccounts'});
-      if (response.length === 1) {
-        localStorage.setItem('connection', 'metamask');
-        setWalletConnection('metamask');
-      }
-      console.log('🚀 ~ file: index.tsx ~ line 31 ~ response', response);
+      const response = await connectWallet();
+      response === 'ok' && localStorage.setItem('connection', 'metamask');
     }
+  };
+
+  const handleAccountChange = (accounts: string[]): void => {
+    if (accounts.length === 0) {
+      console.log('no accounts found, clearing localStorage');
+      localStorage.removeItem('connection');
+      window.location.reload();
+    } else {
+      setConnectedAddress(accounts[0]);
+      console.log('accountWasChanged');
+    }
+  };
+
+  const handleChainChange = (): void => {
+    console.log('chain was changed');
+    window.location.reload();
+  };
+
+  const handleCreateDummy = async (): Promise<void> => {
+    console.log('Link to metamask set up');
   };
 
   return (
@@ -60,21 +81,38 @@ const Home: NextPage = () => {
         <title>Tokenized ballot</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* Move to <Connected />> */}
-      <p className="text-lg text-yellow-400">
-        {walletConnection
-          ? `Connected to ${walletConnection} with ${walletString} on ${provider?._network?.name}`
-          : 'Not connected'}
-      </p>
-      {/* Move to <Connected />> */}
+      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center gap-1">
+        <h1 className="text-7xl font-bold text-slate-50">Tokenized Ballot dApp</h1>
+        <p className="text-2xl font-semibold text-yellow-200 mb-3">Group 14 - Week 4</p>
 
-      {walletConnection ? (
-        <Connected />
-      ) : (
-        <Welcome createDummyWallet={handleCreateDummy} connectMetamask={handleConnectMetamask} />
-      )}
-
-      <footer className="flex h-24 w-full items-center justify-center"></footer>
+        {isLoading ? (
+          <HashLoader
+            color="#FCD34D"
+            loading={isLoading}
+            // cssOverride={override}
+            size={100}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        ) : chainId && chainId !== 5 ? (
+          <>
+            <h2 className="text-4xl font-light text-white">
+              You need to be on Goerli network to use this app. Change network?
+            </h2>
+            <button
+              // onClick={(): void => handleChainChange('5')}
+              className="mt-6 bg-orange-400 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow-lg shadow-zinc-800"
+            >
+              Connect to Goerli
+            </button>
+          </>
+        ) : chainId && connectedAddress ? (
+          <Connected provider={provider} connectedAddress={connectedAddress} />
+        ) : (
+          <Welcome createDummyWallet={handleCreateDummy} connectMetamask={handleConnectMetamask} />
+        )}
+      </main>
+      {/* <footer className="flex h-24 w-full items-center justify-center"></footer> */}
     </div>
   );
 };
