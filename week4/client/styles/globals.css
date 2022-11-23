@@ -2,21 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 body {
-  background: radial-gradient(
-    circle,
-    rgb(117, 0, 159) 45%,
-    rgba(1, 1, 19, 0.9) 
-  );
+  background: radial-gradient(circle, rgb(117, 0, 159) 45%, rgba(1, 1, 19, 0.9));
 
   /* background-color: orange; */
 }
@@ -40,3 +35,20 @@ a {
     background: black;
   }
 } */
+
+.card {
+  /* background: rgb(129, 0, 138); */
+  border-radius: 0.5rem;
+  box-shadow: 0 2rem 2rem rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  /* #FCD34D */
+  /* #FB923C */
+  /* background-color: #df6400; */
+  background-color: #470055;
+  /* background-color: #FCD34D; */
+
+  /* background: radial-gradient(circle, rgb(252, 211, 77) , rgb(251, 146, 60)); */
+}
