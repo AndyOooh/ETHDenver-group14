@@ -1,5 +1,6 @@
 import {deployBallot} from './deploy-ballot';
 import {deployHelloWorld} from './deploy-helloWorld';
+import {deployLottery} from './deploy-lottery';
 import {deployMyToken} from './deploy-myToken';
 import {deployTokenizedBallot} from './deploy-tokenizedBallot';
 
@@ -17,6 +18,9 @@ export const deploy = (): void => {
       break;
     case 'TokenizedBallot':
       deployTokenizedBallot();
+      break;
+    case 'Lottery':
+      deployLottery();
       break;
     default:
       throw new Error('Invalid contract name');

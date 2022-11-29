@@ -5,12 +5,12 @@ import {Ballot, Ballot__factory} from '../../typechain-types';
 dotenv.config();
 
 function getBallotContract(contractAddress: string): Ballot {
-  if (!process.env.GOERLI_PRIVATE_KEY) {
-    throw new Error('GOERLI_PRIVATE_KEY not found');
+  if (!process.env.METAMASK_PK) {
+    throw new Error('METAMASK_PK not found');
   }
 
   const provider = new ethers.providers.AlchemyProvider('goerli', process.env.ALCHEMY_API_KEY);
-  const signer = new ethers.Wallet(process.env.GOERLI_PRIVATE_KEY, provider);
+  const signer = new ethers.Wallet(process.env.METAMASK_PK, provider);
 
   const ballotContractFactory = new Ballot__factory(signer);
   const ballot = ballotContractFactory.attach(contractAddress);

@@ -13,7 +13,7 @@ export class AppService {
 
   constructor() {
     this.provider = new ethers.providers.AlchemyProvider('goerli', process.env.ALCHEMY_API_KEY);
-    const signer = new ethers.Wallet(process.env.GOERLI_PRIVATE_KEY, this.provider);
+    const signer = new ethers.Wallet(process.env.METAMASK_PK, this.provider);
 
     // this.provider = ethers.getDefaultProvider('goerli');
     // this.provider = ethers.getDefaultProvider('http://localhost:8545');

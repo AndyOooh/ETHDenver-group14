@@ -5,7 +5,7 @@ import {MyToken, MyToken__factory} from '../typechain-types';
 export const deployMyToken = async (): Promise<void> => {
   // Should we pass in the network name and private keys as args?
   const {ALCHEMY_API_KEY} = process.env;
-  const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY as string; // getting linter issues if not assigning type.
+  const METAMASK_PK = process.env.METAMASK_PK as string; // getting linter issues if not assigning type.
   const networkName = process.argv[3];
 
   //   A lot of repeat code here. Maybe should refactor
@@ -16,7 +16,7 @@ export const deployMyToken = async (): Promise<void> => {
     let contractFactory: MyToken__factory;
     if (networkName === 'goerli') {
       const provider = new ethers.providers.AlchemyProvider('goerli', ALCHEMY_API_KEY);
-      const wallet = new ethers.Wallet(GOERLI_PRIVATE_KEY, provider);
+      const wallet = new ethers.Wallet(METAMASK_PK, provider);
       const signer = wallet.connect(provider);
       contractFactory = new MyToken__factory(signer);
     } else {
@@ -26,7 +26,7 @@ export const deployMyToken = async (): Promise<void> => {
     const contract: MyToken = await contractFactory.deploy();
     await contract.deployed();
     console.log(
-      `Contract MyToken deployed to: ${contract.address} on chainId: ${contract.deployTransaction.chainId} by: ${contract.deployTransaction.from}`,
+      `Contract MyToken deployed to: ${contract.address} on chainId: ${contract.deployTransaction.chainId} by: ${contract.deployTransaction.from}`
     );
     // return contract.address;
   } catch (error) {

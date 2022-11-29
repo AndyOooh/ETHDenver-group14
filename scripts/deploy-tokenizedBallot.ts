@@ -3,8 +3,8 @@ import {ethers} from 'hardhat';
 import {TokenizedBallot__factory} from '../typechain-types';
 
 export const deployTokenizedBallot = async (): Promise<void> => {
-  if (typeof process.env.GOERLI_PRIVATE_KEY !== 'string') return;
-  const {ALCHEMY_API_KEY, GOERLI_PRIVATE_KEY} = process.env;
+  if (typeof process.env.METAMASK_PK !== 'string') return;
+  const {ALCHEMY_API_KEY, METAMASK_PK} = process.env;
   const [networkName, myTokenAddress, ...proposals] = process.argv.slice(3);
 
   if (!proposals || proposals.length === 0) {
@@ -20,7 +20,7 @@ export const deployTokenizedBallot = async (): Promise<void> => {
         throw new Error('ALCHEMY_API_KEY missing');
       }
       const provider = new ethers.providers.AlchemyProvider('goerli', ALCHEMY_API_KEY);
-      const wallet = new ethers.Wallet(GOERLI_PRIVATE_KEY, provider);
+      const wallet = new ethers.Wallet(METAMASK_PK, provider);
       const signer = wallet.connect(provider);
       ContractFactory = new TokenizedBallot__factory(signer);
       const lastBlock = await provider.getBlock('latest');
