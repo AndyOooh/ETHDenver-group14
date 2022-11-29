@@ -5,7 +5,7 @@ import 'dotenv/config';
 // deploy function
 export const deployBallot = async (): Promise<void> => {
   const {ALCHEMY_API_KEY} = process.env;
-  const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY as string; // getting linter issues if not assigning type.
+  const METAMASK_PK = process.env.METAMASK_PK as string; // getting linter issues if not assigning type.
   const [networkName, ...constructorArgs] = process.argv.slice(3);
   if (!ALCHEMY_API_KEY) {
     throw new Error('ALCHEMY_API_KEY missing');
@@ -19,7 +19,7 @@ export const deployBallot = async (): Promise<void> => {
     if (networkName === 'goerli') {
       // deploy to goerli
       const provider = new ethers.providers.AlchemyProvider('goerli', ALCHEMY_API_KEY);
-      const wallet = new ethers.Wallet(GOERLI_PRIVATE_KEY, provider);
+      const wallet = new ethers.Wallet(METAMASK_PK, provider);
       const signer = wallet.connect(provider);
       ContractFactory = new Ballot__factory(signer);
     } else {

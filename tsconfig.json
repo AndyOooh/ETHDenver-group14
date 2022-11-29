@@ -15,7 +15,7 @@
     "incremental": true,
     "noImplicitReturns": true,
     "strictNullChecks": false,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["./scripts", "./test", "./typechain-types"],
   "files": ["./hardhat.config.ts"],

@@ -11,11 +11,11 @@ const {ALCHEMY_API_KEY, ETHERSCAN_API_KEY, GAS_REPORTER_ENABLED, CMC_API_KEY} = 
 // go to Account Details > Export Private Key
 // Beware: NEVER put real Ether into testing accounts
 const networkArg = process.argv[3];
-const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY as string;
+const METAMASK_PK = process.env.METAMASK_PK as string;
 
-// Make sure GOERLI_PRIVATE_KEY is set in .env if goerli is chosen as network.
-if (networkArg === 'goerli' && !GOERLI_PRIVATE_KEY) {
-  throw new Error('GOERLI_PRIVATE_KEY missing');
+// Make sure METAMASK_PK is set in .env if goerli is chosen as network.
+if (networkArg === 'goerli' && !METAMASK_PK) {
+  throw new Error('METAMASK_PK missing');
 }
 
 const config: HardhatUserConfig = {
@@ -23,7 +23,7 @@ const config: HardhatUserConfig = {
   networks: {
     goerli: {
       url: `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
-      accounts: [GOERLI_PRIVATE_KEY]
+      accounts: [METAMASK_PK]
     }
     // fuji: {
     //   url: "https://api.avax-test.network/ext/bc/C/rpc",
