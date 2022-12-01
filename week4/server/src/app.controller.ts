@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post} from '@nestjs/common';
 import {AppService} from './app.service';
 
 export class RequestTokensDto {
@@ -9,13 +9,15 @@ export class RequestTokensDto {
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('token-address')
-  getTokenAddress(): contractData[] {
-    return this.appService.getContractsData();
+  // Week4
+  @Get('contract-data/:contract')
+  // getContractsData(@Param('contract') contract: string): contractData[] | contractData {
+  getContractsData(@Param('contract') contract: string) {
+    return this.appService.getContractsData(contract);
   }
 
   @Post('request-tokens')
   requestTokens(@Body() body: RequestTokensDto): Promise<void> {
-    return this.appService.requestTokens(body.toAddress);
+    return this.appService.requestWEEK4(body.toAddress);
   }
 }

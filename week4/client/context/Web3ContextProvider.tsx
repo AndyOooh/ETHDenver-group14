@@ -1,5 +1,13 @@
 import {ethers} from 'ethers';
-import {createContext, ReactNode, useEffect, useMemo, useState} from 'react';
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 
 type Props = {
   children: ReactNode;
@@ -8,6 +16,7 @@ type Props = {
 export type Web3ContextType = {
   provider: ethers.providers.Web3Provider | undefined;
   setProvider: (provider: ethers.providers.Web3Provider) => void;
+  // setProvider: Dispatch<SetStateAction<ethers.providers.Web3Provider | undefined>>; // copy from hover. Also, works.
   connectedAddress: string;
   setConnectedAddress: (address: string) => void;
   chainId: number | null;
@@ -17,7 +26,8 @@ export type Web3ContextType = {
   connectMetamask: () => Promise<string | void>;
 };
 
-export const Web3Context = createContext({});
+export const Web3Context = createContext({} as Web3ContextType); // using type assertion to avoid always checking for null
+// export const Web3Context = createContext<Web3ContextType | null>(null); // also works.
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const Web3ContextProvider = ({children}: Props) => {

@@ -15,7 +15,7 @@ export const Header: NextPage = () => {
       <button
         onClick={connectMetamask}
         disabled={false}
-        className="bg-orange-400 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow-lg shadow-zinc-800"
+        className="whitespace-nowrap bg-orange-400 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow-lg shadow-zinc-800"
       >
         {buttonText}
       </button>

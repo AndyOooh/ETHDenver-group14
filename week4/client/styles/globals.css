@@ -9,7 +9,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
-    color: #F8FAFC
+  color: #f8fafc;
 }
 
 body {
@@ -69,3 +69,23 @@ a {
   /* box-shadow: inset 0 0 2rem 2rem rgba(255, 255, 255, 0.3); */
   box-shadow: inset 0 0 0.4rem 0 rgb(255, 255, 255);
 }
+
+.btn {
+  background-color: #FEF08A;
+  color: #424242;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border: 1px solid #9ca3af;
+  border-radius: 0.75rem;
+  /* box-shadow: 0 0 0.02rem 0.02rem #27272a; */
+  box-shadow: 0 0 0.25rem 0.05rem black;
+
+
+}
+
+.btn:hover {
+  background-color: #D0D5DB;
+}
+
+/*     py-2 px-4 border border-gray-400
+    rounded-xl shadow-lg shadow-zinc-800; */

@@ -8,11 +8,6 @@ import {Header} from '../components/Header';
 import Main from '../components/Main';
 import {Web3Context, Web3ContextType} from '../context/Web3ContextProvider';
 
-type BallotProps = {
-  provider: ethers.providers.Web3Provider | undefined;
-  connectedAddress: string;
-};
-
 type VoteData = {
   proposal: string;
   amount: number;
@@ -23,9 +18,8 @@ type Proposal = {
   voteCount: number;
 };
 
-const Ballot: NextPage<BallotProps> = () => {
+const Ballot: NextPage = () => {
   const {provider, connectedAddress} = useContext(Web3Context) as Web3ContextType;
-  console.log('🚀 ~ file: ballot.tsx ~ line 28 ~ connectedAddress', connectedAddress);
   const [myTokenContract, setMyTokenContract] = useState<ethers.Contract | null>(null);
   const [ballotContract, setBallotContract] = useState<ethers.Contract | null>(null);
   const [balanceWEEK4, setBalanceWEEK4] = useState<number | null>(null);
@@ -52,12 +46,9 @@ const Ballot: NextPage<BallotProps> = () => {
 
   const initialize = async (): Promise<void> => {
     try {
-      console.log('initialize');
-      const {data} = await api.get('/token-address');
+      const {data} = await api.get('/contract-data/Ballot');
       const [myTokenData, ballotData] = data;
       const signer = provider?.getSigner(connectedAddress);
-      console.log('🚀 ~ file: ballot.tsx ~ line 58 ~ signer', signer);
-      console.log('🚀 ~ file: ballot.tsx ~ line 58 ~ connectedAddress', connectedAddress);
       const _MyTokenContract = new ethers.Contract(myTokenData.address, myTokenData.abi, signer);
       setMyTokenContract(_MyTokenContract);
       const _WEEK4Balance = await _MyTokenContract.balanceOf(connectedAddress);

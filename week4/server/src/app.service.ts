@@ -1,9 +1,11 @@
 import {Injectable} from '@nestjs/common';
 import {ethers} from 'ethers';
 
-import * as tokenJson from 'assets/MyToken.json';
-import {erc20Data} from 'assets/ER20Constants';
-import {tokenBallotData} from 'assets/tokenBallotConstants';
+import * as tokenJson from 'assets/week4/MyToken.json';
+import {erc20Data} from 'assets/week4/ER20Constants';
+import {tokenBallotData} from 'assets/week4/tokenBallotConstants';
+import {lotteryData} from 'assets/week5/lotteryConstants';
+import { LOTData } from 'assets/week5/LOTConstants';
 
 @Injectable()
 export class AppService {
@@ -28,11 +30,17 @@ export class AppService {
     this.erc20Contract = new ethers.Contract(erc20Data.address, erc20Data.abi, signer);
   }
 
-  getContractsData() {
-    return [erc20Data, tokenBallotData];
+  // Global/util
+  getContractsData(contractName: string) {
+    if (contractName === 'Ballot') {
+      return [erc20Data, tokenBallotData];
+    } else if (contractName === 'Lottery') {
+      return [lotteryData, LOTData];
+    }
   }
 
-  async requestTokens(toAddress: string) {
+  // Week 4
+  async requestWEEK4(toAddress: string) {
     // hardcoded to 2 ether
     const amount = '2';
     const amountWei = ethers.utils.parseEther(amount);
