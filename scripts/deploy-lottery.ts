@@ -9,7 +9,7 @@ export const deployLottery = async (): Promise<void> => {
 
   const TOKEN_NAME = 'Lottery';
   const TOKEN_SYMBOL = 'LOT';
-  const PURCHASE_RATIO = 1;
+  const PURCHASE_RATIO = 10000;
   const BET_PRICE = 1;
   const BET_FEE = 0.2;
 
@@ -36,8 +36,8 @@ export const deployLottery = async (): Promise<void> => {
       TOKEN_NAME,
       TOKEN_SYMBOL,
       PURCHASE_RATIO,
-      BET_PRICE,
-      BET_FEE
+      ethers.utils.parseEther(BET_PRICE.toFixed(18)),
+      ethers.utils.parseEther(BET_FEE.toFixed(18))
     );
     await contract.deployed();
     console.log(`Contract ${contractName} deployed to: ${contract.address} on chainId: ${contract.deployTransaction.chainId}

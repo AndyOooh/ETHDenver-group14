@@ -7,11 +7,8 @@ import {api} from '../api/axios.config';
 import {Header} from '../components/Header';
 import Main from '../components/Main';
 import {Web3Context, Web3ContextType} from '../context/Web3ContextProvider';
-
-type BallotProps = {
-  provider: ethers.providers.Web3Provider | undefined;
-  connectedAddress: string;
-};
+import {BalanceCard} from '../components/BalanceCard';
+import {DisconnectMessage} from '../components/DisconnectMessage';
 
 type VoteData = {
   proposal: string;
@@ -23,17 +20,18 @@ type Proposal = {
   voteCount: number;
 };
 
-const Ballot: NextPage<BallotProps> = () => {
+type Status =
+  // | 'disconnected'
+  'loading' | 'idle' | 'requestingTokens' | 'delegatingVotes' | 'voting';
+
+const Ballot: NextPage = () => {
   const {provider, connectedAddress} = useContext(Web3Context) as Web3ContextType;
-  console.log('🚀 ~ file: ballot.tsx ~ line 28 ~ connectedAddress', connectedAddress);
   const [myTokenContract, setMyTokenContract] = useState<ethers.Contract | null>(null);
   const [ballotContract, setBallotContract] = useState<ethers.Contract | null>(null);
   const [balanceWEEK4, setBalanceWEEK4] = useState<number | null>(null);
   const [balanceETH, setBalanceETH] = useState<number | null>(null);
   const [votingPower, setVotingPower] = useState<number>(0);
-  const [status, setStatus] = useState<
-    'loading' | 'idle' | 'requestingTokens' | 'delegatingVotes' | 'voting'
-  >('loading');
+  const [status, setStatus] = useState<Status>('loading');
   const [voteData, setVoteData] = useState<VoteData | null>({proposal: '', amount: 1});
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [proposals, setProposals] = useState<Proposal[] | null>(null);
@@ -52,12 +50,9 @@ const Ballot: NextPage<BallotProps> = () => {
 
   const initialize = async (): Promise<void> => {
     try {
-      console.log('initialize');
-      const {data} = await api.get('/token-address');
+      const {data} = await api.get('/contract-data/Ballot');
       const [myTokenData, ballotData] = data;
       const signer = provider?.getSigner(connectedAddress);
-      console.log('🚀 ~ file: ballot.tsx ~ line 58 ~ signer', signer);
-      console.log('🚀 ~ file: ballot.tsx ~ line 58 ~ connectedAddress', connectedAddress);
       const _MyTokenContract = new ethers.Contract(myTokenData.address, myTokenData.abi, signer);
       setMyTokenContract(_MyTokenContract);
       const _WEEK4Balance = await _MyTokenContract.balanceOf(connectedAddress);
@@ -145,23 +140,17 @@ const Ballot: NextPage<BallotProps> = () => {
   return (
     <>
       <Header />
-      <Main>
-        <h1 className="text-7xl font-bold text-slate-50">Tokenized Ballot dApp</h1>
-        <p className="text-2xl font-semibold text-yellow-200 mb-3">Group 14 - Week 4</p>
-        {status === 'loading' ? (
+      <Main title="Tokenized Ballot dApp" subtitle="Group 14 - Week 4">
+        {!connectedAddress ? (
+          <DisconnectMessage />
+        ) : status === 'loading' ? (
           <HashLoader color="#FCD34D" size={60} aria-label="Loading Spinner" data-testid="loader" />
         ) : (
           <>
             <div className="m flex gap-7 mt-6 text-slate-200 text-lg font-medium">
-              <div className="card">
-                <span>Ether Balance:</span> <span>{balanceETH}</span>{' '}
-              </div>
-              <div className="card">
-                <span>WEEK4 Balance:</span> <span>{balanceWEEK4}</span>{' '}
-              </div>
-              <div className="card">
-                <span>Voting Power:</span> <span>{votingPower}</span>{' '}
-              </div>
+              <BalanceCard text="Ether Balance:" value={balanceETH} />
+              <BalanceCard text="WEEK4 Balance:" value={balanceWEEK4} />
+              <BalanceCard text="Voting Power:" value={votingPower} />
             </div>
 
             <p className="text-2xl text-slate-50 mt-6">Vote count</p>
@@ -193,7 +182,7 @@ const Ballot: NextPage<BallotProps> = () => {
               <>
                 <div
                   id="buttons"
-                  className="min-w-lg max-w-lg flex gap-4 my-5 text-lg whitespace-nowrap "
+                  className="min-w-lg max-w-lg flex gap-4 my-5 text-lg whitespace-nowrap"
                 >
                   <button
                     onClick={handleRequestTokens}
@@ -238,17 +227,13 @@ const Ballot: NextPage<BallotProps> = () => {
                       id="amount"
                       placeholder="1"
                       // eslint-disable-next-line max-len
-                      className=" text-white  
-                placeholder-white
-                
-                even-inner-shadow  
-                 rounded-md border-solid text-lg text-center  bg-white bg-opacity-25 p-2"
+                      className=" text-white placeholder-white even-inner-shadow rounded-md border-solid text-lg text-center  bg-white bg-opacity-25 p-2"
                     />
                     <button
                       type="submit"
                       disabled={!isFormValid}
                       // eslint-disable-next-line max-len
-                      className=" even-shadow disabled:bg-gray-300 bg-orange-400 px-28 hover:bg-gray-100 text-gray-800 font-semibold py-2 border rounded-xl shadow-lg shadow-zinc-800"
+                      className="even-shadow disabled:bg-gray-300 bg-orange-400 px-28 hover:bg-gray-100 text-gray-800 font-semibold py-2 border rounded-xl shadow-lg shadow-zinc-800"
                     >
                       vote
                     </button>

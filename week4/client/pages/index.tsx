@@ -12,10 +12,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Main>
-        <h1 className="text-7xl font-bold text-slate-50">ETHDenver boot camp by Encode</h1>
-        <p className="text-2xl font-semibold text-yellow-200 mb-3">Group 14</p>
-      </Main>
+        <Main title="ETHDenver boot camp by Encode" subtitle="Group 14"></Main>
     </>
   );
 };

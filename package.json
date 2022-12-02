@@ -5,7 +5,7 @@
   "main": "scripts/deploy.ts",
   "scripts": {
     "test": "yarn hardhat test",
-    "deploy": "yarn run ts-node --files scripts/deploy.ts ",
+    "deploy": "yarn run ts-node --files scripts/deploy.ts <contractName> <networkName> <args>",
     "compile": "yarn hardhat compile",
     "helloWorld:setText": "yarn run ts-node scripts/transactions/setText.ts",
     "ballot:giveRightToVote": "yarn run ts-node scripts/transactions/giveRightToVote.ts <contractAddress> <voterAddress>",
@@ -15,13 +15,14 @@
     "lint:sol": "yarn run solhint contracts/**/*.sol",
     "lint:ts": "eslint --max-warnings 7 --ext js,ts,json scripts test",
     "lint:ts:fix": "eslint --fix --ext js,ts,json,test.ts scripts test",
-    "myToken:mint": "yarn run ts-node scripts/transactions/week3/mint.ts <contractAddress> <toAddress> <amount>",
-    "myToken:getVotes": "yarn run ts-node scripts/transactions/week3/getVotes.ts <contractAddress> <atAddress>",
-    "myToken:delegate": "yarn run ts-node scripts/transactions/week3/delegate.ts <contractAddress>",
-    "myToken:transfer": "yarn run ts-node scripts/transactions/week3/transfer.ts <contractAddress> <toAddress> <amount>",
-    "tokenizedBallot:getVotingPower": "yarn run ts-node scripts/transactions/week3/getVotingPower.ts <contractAddress> <accountAddress>",
-    "tokenizedBallot:vote": "yarn run ts-node scripts/transactions/week3/vote.ts <contractAddress> <proposalIndex> <amount>",
-    "tokenizedBallot:getWinner": "yarn run ts-node scripts/transactions/week3/getWinner.ts <contractAddress>"
+    "lottery:openBets": "yarn run ts-node scripts/transactions/week5/openBets.ts  ",
+    "myToken:mint": "yarn run ts-node scripts/transactions/week4/mint.ts <contractAddress> <toAddress> <amount>",
+    "myToken:getVotes": "yarn run ts-node scripts/transactions/week4/getVotes.ts <contractAddress> <atAddress>",
+    "myToken:delegate": "yarn run ts-node scripts/transactions/week4/delegate.ts <contractAddress>",
+    "myToken:transfer": "yarn run ts-node scripts/transactions/week4/transfer.ts <contractAddress> <toAddress> <amount>",
+    "tokenizedBallot:getVotingPower": "yarn run ts-node scripts/transactions/week4/getVotingPower.ts <contractAddress> <accountAddress>",
+    "tokenizedBallot:vote": "yarn run ts-node scripts/transactions/week4/vote.ts <contractAddress> <proposalIndex> <amount>",
+    "tokenizedBallot:getWinner": "yarn run ts-node scripts/transactions/week4/getWinner.ts <contractAddress>"
   },
   "repository": {
     "type": "git",
