@@ -66,6 +66,7 @@ export const Web3ContextProvider = ({children}: Props) => {
     try {
       const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
       setConnectedAddress(accounts[0]);
+      localStorage.setItem('connection', 'metamask');
       setIsLoading(false);
       return 'ok'; // TODO
     } catch (error) {

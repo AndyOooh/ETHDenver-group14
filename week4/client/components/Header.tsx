@@ -22,5 +22,3 @@ export const Header: NextPage = () => {
     </header>
   );
 };
-
-//flex justify-between items-center

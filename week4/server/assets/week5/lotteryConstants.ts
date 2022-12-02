@@ -1,5 +1,5 @@
 export const lotteryData: contractData = {
-  address: '0x327FCcAe517242Dc83650Fd94d038AA9E533F4E8',
+  address: '0x5f539341E79732B32C1dBC9dab6F04C309b60995',
   abi: [
     {
       inputs: [

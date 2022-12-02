@@ -15,7 +15,7 @@
     "lint:sol": "yarn run solhint contracts/**/*.sol",
     "lint:ts": "eslint --max-warnings 7 --ext js,ts,json scripts test",
     "lint:ts:fix": "eslint --fix --ext js,ts,json,test.ts scripts test",
-    "lottery:openBets": "yarn run ts-node scripts/transactions/week5/openBets.ts ",
+    "lottery:openBets": "yarn run ts-node scripts/transactions/week5/openBets.ts  ",
     "myToken:mint": "yarn run ts-node scripts/transactions/week4/mint.ts <contractAddress> <toAddress> <amount>",
     "myToken:getVotes": "yarn run ts-node scripts/transactions/week4/getVotes.ts <contractAddress> <atAddress>",
     "myToken:delegate": "yarn run ts-node scripts/transactions/week4/delegate.ts <contractAddress>",

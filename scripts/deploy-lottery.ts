@@ -9,7 +9,7 @@ export const deployLottery = async (): Promise<void> => {
 
   const TOKEN_NAME = 'Lottery';
   const TOKEN_SYMBOL = 'LOT';
-  const PURCHASE_RATIO = 1;
+  const PURCHASE_RATIO = 10000;
   const BET_PRICE = 1;
   const BET_FEE = 0.2;
 

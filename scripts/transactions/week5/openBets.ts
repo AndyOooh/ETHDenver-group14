@@ -7,20 +7,16 @@ async function openBets(duration: string): Promise<void> {
   if (!process.env.METAMASK_PK) {
     throw new Error('METAMASK_PK not found');
   }
-  const lotteryContractAddress = '0x327FCcAe517242Dc83650Fd94d038AA9E533F4E8';
+  const lotteryContractAddress = '0x5f539341E79732B32C1dBC9dab6F04C309b60995';
   const currentBlock = await ethers.provider.getBlock('latest');
   const provider = new ethers.providers.AlchemyProvider('goerli', process.env.ALCHEMY_API_KEY);
   const signer = new ethers.Wallet(process.env.METAMASK_PK, provider);
   const lotteryContractFactory = new Lottery__factory(signer);
   const lotteryContract = lotteryContractFactory.attach(lotteryContractAddress);
-  console.log('🚀  file: openBets.ts:16  lotteryContract', lotteryContract)
 
   try {
-    console.log('GONNE TRY TO OPEN THE BETS');
-    // const closingTime = currentBlock.timestamp + parseInt(duration);
+    console.log('opening lottery for bets... is the previous lottery closed?');
     const closingTime = currentBlock.timestamp + Number(duration);
-    console.log('🚀  file: openBets.ts:20  closingTime', closingTime)
-    // const openBetsTx = await lotteryContract.openBets(currentBlock.timestamp + Number(duration));
     const openBetsTx = await lotteryContract.openBets(closingTime);
     await openBetsTx.wait();
     console.log(`openBets tx hash: ${openBetsTx.hash}`);
