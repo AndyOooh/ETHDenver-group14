@@ -1,12 +1,14 @@
-import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import {NestFactory} from '@nestjs/core';
+import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 
-import { AppModule } from './app.module';
+import {AppModule} from './app.module';
 
 async function bootstrap() {
-  const { PORT } = process.env;
+  const {NODE_ENV, PORT, ORIGIN_DEV, ORIGIN_PROD} = process.env;
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  app.enableCors({
+    // origin: NODE_ENV === 'production' ? ORIGIN_PROD : ORIGIN_DEV
+  });
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Tokenized Ballot API')
     .setDescription('UI for interacting with NestJS API')
@@ -15,7 +17,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
-  await app.listen(PORT, () => {
+  await app.listen(PORT || 8080, () => {
     console.log(`Listening on Port ${PORT}`);
   });
 }

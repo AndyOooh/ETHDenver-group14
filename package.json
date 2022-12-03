@@ -1,9 +1,12 @@
 {
-  "name": "ethdenver-group14",
+  "name": "encode-bootcamp",
   "version": "1.0.0",
   "description": "<h1 align=\"center\">ETHDenver boot camp Nov 24 2022 cohort</h1> <h4 align=\"center\">Group 14</h4> <p>   <img alt=\"Version\" src=\"https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000\" />   <a href=\"#\" target=\"_blank\">     <img alt=\"License: ISC\" src=\"https://img.shields.io/badge/License-ISC-yellow.svg\" />   </a> </p>",
   "main": "scripts/deploy.ts",
   "scripts": {
+    "postinstall": "yarn postinstall-server && yarn postinstall-client",
+    "postinstall-server": "cd dApp/server && yarn build && yarn start:prod",
+    "postinstall-client": "cd dApp/client && yarn build && yarn start",
     "test": "yarn hardhat test",
     "deploy": "yarn run ts-node --files scripts/deploy.ts <contractName> <networkName> <args>",
     "compile": "yarn hardhat compile",
@@ -15,7 +18,7 @@
     "lint:sol": "yarn run solhint contracts/**/*.sol",
     "lint:ts": "eslint --max-warnings 7 --ext js,ts,json scripts test",
     "lint:ts:fix": "eslint --fix --ext js,ts,json,test.ts scripts test",
-    "lottery:openBets": "yarn run ts-node scripts/transactions/week5/openBets.ts  ",
+    "lottery:openBets": "yarn run ts-node scripts/transactions/week5/openBets.ts <duration> ",
     "myToken:mint": "yarn run ts-node scripts/transactions/week4/mint.ts <contractAddress> <toAddress> <amount>",
     "myToken:getVotes": "yarn run ts-node scripts/transactions/week4/getVotes.ts <contractAddress> <atAddress>",
     "myToken:delegate": "yarn run ts-node scripts/transactions/week4/delegate.ts <contractAddress>",
