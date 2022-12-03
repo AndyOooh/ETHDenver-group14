@@ -11,6 +11,9 @@
 
 - [Week1](GroupProjects/Week1.md) 
 - [Week2](GroupProjects/Week2.md) 
+- [Week3](GroupProjects/Week3.md) 
+- [Week4](GroupProjects/Week4.md) 
+- [Week5](GroupProjects/Week5.md) 
 
 
 # Setup
@@ -26,7 +29,7 @@
 - Lint fix TS/JS files: `npm run lint:ts:fix`
 - Lint fix Solidity files: `npm run lint:sol`
 
-# Deploying
+# Deploying Contracts
 
 1. Add the env variables as specified in the example file
 2. `yarn deploy <contractName> <networkName> <constructorArgs>` where contractName is _PascalCase_ and networkName is _lowercase_
