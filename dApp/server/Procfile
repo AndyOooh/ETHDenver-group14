@@ -1,0 +1,1 @@
+web: cd dApp/server && yarn start:prod
