@@ -1,11 +1,11 @@
 import {Injectable} from '@nestjs/common';
 import {ethers} from 'ethers';
 
-import * as tokenJson from 'assets/week4/MyToken.json';
-import {erc20Data} from 'assets/week4/ER20Constants';
-import {tokenBallotData} from 'assets/week4/tokenBallotConstants';
-import {lotteryData} from 'assets/week5/lotteryConstants';
-import { LOTData } from 'assets/week5/LOTConstants';
+import * as tokenJson from 'src/assets/week4/MyToken.json';
+import {erc20Data} from 'src/assets/week4/ER20Constants';
+import {tokenBallotData} from 'src/assets/week4/tokenBallotConstants';
+import {lotteryData} from 'src/assets/week5/lotteryConstants';
+import { LOTData } from 'src/assets/week5/LOTConstants';
 
 @Injectable()
 export class AppService {
