@@ -8,7 +8,7 @@
   "main": "scripts/deploy.ts",
   "scripts": {
     "postinstall": "if [ $SERVER_ENV ]; then yarn postinstall-server; elif [ $CLIENT_ENV ]; then yarn postinstall-client; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi",
-    "postinstall-server": "cd dApp/server && yarn install",
+    "postinstall-server": "cd dApp/server && yarn install && yarn build",
     "postinstall-client": "cd dApp/client && yarn install && yarn build",
     "test": "yarn hardhat test",
     "deploy": "yarn run ts-node --files scripts/deploy.ts <contractName> <networkName> <args>",
